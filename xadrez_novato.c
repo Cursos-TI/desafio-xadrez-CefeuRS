@@ -1,34 +1,32 @@
 #include <stdio.h>
 
-// Desafio de Xadrez
-// nivel novato - movimentacoes simples das pecas
-
 int main() {
-    // declarando as constantes pra cada peca
-    const int bispo_casas = 5;
-    const int torre_casas = 5;
-    const int rainha_casas = 8;
+    // constantes de movimento
+    const int MOV_BISPO = 5;  // vai ficar com for
+    const int MOV_TORRE = 5;  // vai usar while
+    const int MOV_RAINHA = 8; // vai usar do-while
 
-    // movimentacao do bispo
-    // o bispo se move em diagonal superior direita, entao uma combinacao de cima + direita
+    // Movimento do Bispo (for)
     printf("Movimento do Bispo (diagonal superior direita):\n");
-    for(int i = 1; i <= bispo_casas; i++) {
+    for (int i = 1; i <= MOV_BISPO; i++) {
         printf("Passo %d: Cima + Direita\n", i);
     }
 
-    // movimentacao da torre
-    // a torre vai pra direita
+    // Movimento da Torre (while)
     printf("\nMovimento da Torre (para a direita):\n");
-    for(int i = 1; i <= torre_casas; i++) {
-        printf("Passo %d: Direita\n", i);
+    int contador_torre = 1;
+    while (contador_torre <= MOV_TORRE) {
+        printf("Passo %d: Direita\n", contador_torre);
+        contador_torre++;
     }
 
-    // movimentacao da rainha
-    // a rainha nesse caso vai 8 casas pra esquerda
+    // Movimento da Rainha (do-while)
     printf("\nMovimento da Rainha (para a esquerda):\n");
-    for(int i = 1; i <= rainha_casas; i++) {
-        printf("Passo %d: Esquerda\n", i);
-    }
+    int contador_rainha = 1;
+    do {
+        printf("Passo %d: Esquerda\n", contador_rainha);
+        contador_rainha++;
+    } while (contador_rainha <= MOV_RAINHA);
 
     return 0;
 }
