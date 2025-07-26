@@ -1,25 +1,42 @@
 #include <stdio.h>
 
 int main() {
-    // Nível Aventureiro - movimentacao do Cavalo em L
-    // objetivo eh usar loops aninhados: um pra linha e outro pra coluna
+    // Movimento da Torre (Nivel Novato)
+    printf("\nMovimento da Torre:\n");
+    const int MOVIMENTOS_TORRE = 5;
+    for (int i = 0; i < MOVIMENTOS_TORRE; i++) {
+        printf("Direita\n");
+    }
 
-    const int MOVIMENTOS_L = 3; // quantos movimentos em L o cavalo vai fazer
+    // Movimento do Bispo (Nivel Novato)
+    printf("\nMovimento do Bispo:\n");
+    const int MOVIMENTOS_BISPO = 5;
+    int j = 0;
+    while (j < MOVIMENTOS_BISPO) {
+        printf("Cima\n");
+        printf("Direita\n");
+        j++;
+    }
 
-    printf("Movimentacao do Cavalo em L:\n");
+    // Movimento da Rainha (Nivel Novato)
+    printf("\nMovimento da Rainha:\n");
+    const int MOVIMENTOS_RAINHA = 8;
+    int k = 0;
+    do {
+        printf("Esquerda\n");
+        k++;
+    } while (k < MOVIMENTOS_RAINHA);
 
-    for (int i = 1; i <= MOVIMENTOS_L; i++) {
-        printf("Movimento em L %d:\n", i);
-
-        // parte 1 do L: 2 passos para baixo
-        int passo_baixo = 1;
-        while (passo_baixo <= 2) {
-            printf("  Passo %d: Baixo\n", passo_baixo);
-            passo_baixo++;
+    // Movimento do Cavalo (Nivel Aventureiro)
+    printf("\nMovimento do Cavalo:\n");
+    const int MOVIMENTOS_L = 3;
+    for (int i = 0; i < MOVIMENTOS_L; i++) {
+        int passos = 0;
+        while (passos < 2) {
+            printf("Baixo\n");
+            passos++;
         }
-
-        // parte 2 do L: 1 passo para esquerda
-        printf("  Passo final: Esquerda\n");
+        printf("Esquerda\n");
     }
 
     return 0;
