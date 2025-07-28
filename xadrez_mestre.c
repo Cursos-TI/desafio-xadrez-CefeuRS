@@ -2,55 +2,20 @@
 
 #define PASSOS_TORRE 5
 #define PASSOS_BISPO 5
-#define PASSOS_RAINHA 8
+#define PASSOS_RAINHA 5
 
-// funçao pra mostrar movimentação do peao
-void movimentar_peao() {
-    printf("\nMovimentacao do Peao:\n");
-    printf("  O peao anda 1 casa pra frente\n");
-    printf("  Na primeira jogada pode andar 2 casas\n");
-    printf("  Captura na diagonal\n");
-}
+void movimentar_peao();
+void movimentar_rei();
+void movimentar_torre_recursiva(int passos_restantes, const char* direcao);
+void movimentar_torre();
+void movimentar_bispo_recursiva(int passos_restantes, const char* direcao);
+void movimentar_bispo();
+void movimentar_rainha_recursiva(int passos_restantes, const char* direcao);
+void movimentar_rainha();
+void movimentar_cavalo();
 
-// funçao pra mostrar movimentação do rei
-void movimentar_rei() {
-    printf("\nMovimentacao do Rei:\n");
-    printf("  O rei anda 1 casa em qualquer direçao\n");
-}
-
-// funçao pra mostrar movimentação da torre
-void movimentar_torre(int passo) {
-    printf("\nMovimentacao da Torre:\n");
-    for(int i = 1; i <= PASSOS_TORRE; i++) {
-        printf("  Passo %d: Anda em linha reta\n", i);
-    }
-}
-
-// funçao pra mostrar movimentação do bispo
-void movimentar_bispo(int passo) {
-    printf("\nMovimentacao do Bispo:\n");
-    for(int i = 1; i <= PASSOS_BISPO; i++) {
-        printf("  Passo %d: Anda na diagonal\n", i);
-    }
-}
-
-// funçao pra mostrar movimentação da rainha
-void movimentar_rainha(int passo) {
-    printf("\nMovimentacao da Rainha:\n");
-    for(int i = 1; i <= PASSOS_RAINHA; i++) {
-        printf("  Passo %d: Pode ir na diagonal, vertical ou horizontal\n", i);
-    }
-}
-
-// funçao pra mostrar movimentação do cavalo
-void movimentar_cavalo() {
-    printf("\nMovimentacao do Cavalo em L:\n");
-    for(int i = 1; i <= 3; i++) {
-        printf("Movimento em L %d:\n", i);
-        printf("  Passo 1: Baixo\n");
-        printf("  Passo 2: Baixo\n");
-        printf("  Passo final: Esquerda\n");
-    }
+void imprimir_passo(const char* peca, const char* direcao) {
+    printf("  %s move: %s\n", peca, direcao);
 }
 
 int main() {
@@ -71,14 +36,100 @@ int main() {
         switch(opcao) {
             case 1: movimentar_peao(); break;
             case 2: movimentar_rei(); break;
-            case 3: movimentar_torre(0); break;
-            case 4: movimentar_bispo(0); break;
-            case 5: movimentar_rainha(0); break;
+            case 3: movimentar_torre(); break;
+            case 4: movimentar_bispo(); break;
+            case 5: movimentar_rainha(); break;
             case 6: movimentar_cavalo(); break;
-            case 0: printf("Encerrando o programa...\n"); break;
-            default: printf("Opcao invalida, tente de novo!\n");
         }
     } while(opcao != 0);
 
     return 0;
+}
+
+// ----------------- PEÇAS ------------------
+
+void movimentar_peao() {
+    int passos = 2;
+    printf("\nMovimentacao do Peao:\n");
+    for (int i = 0; i < passos; i++) {
+        imprimir_passo("Peao", "Cima");
+    }
+}
+
+void movimentar_rei() {
+    const char* direcoes[] = {
+        "Cima", "Baixo", "Direita", "Esquerda",
+        "Diagonal Cima-Direita", "Diagonal Cima-Esquerda",
+        "Diagonal Baixo-Direita", "Diagonal Baixo-Esquerda"
+    };
+    printf("\nMovimentacao do Rei:\n");
+    for (int i = 0; i < 8; i++) {
+        imprimir_passo("Rei", direcoes[i]);
+    }
+}
+
+// ----------------- TORRE ------------------
+
+void movimentar_torre_recursiva(int passos_restantes, const char* direcao) {
+    if (passos_restantes == 0) return;
+    imprimir_passo("Torre", direcao);
+    movimentar_torre_recursiva(passos_restantes - 1, direcao);
+}
+
+void movimentar_torre() {
+    printf("\nMovimentacao da Torre (5 casas para Direita):\n");
+    movimentar_torre_recursiva(PASSOS_TORRE, "Direita");
+}
+
+// ----------------- BISPO ------------------
+
+void movimentar_bispo_recursiva(int passos_restantes, const char* direcao) {
+    if (passos_restantes == 0) return;
+    imprimir_passo("Bispo", direcao);
+    movimentar_bispo_recursiva(passos_restantes - 1, direcao);
+}
+
+void movimentar_bispo() {
+    printf("\nMovimentacao do Bispo (5 casas na Diagonal Cima-Direita):\n");
+    movimentar_bispo_recursiva(PASSOS_BISPO, "Diagonal Cima-Direita");
+}
+
+// ----------------- RAINHA ------------------
+
+void movimentar_rainha_recursiva(int passos_restantes, const char* direcao) {
+    if (passos_restantes == 0) return;
+    imprimir_passo("Rainha", direcao);
+    movimentar_rainha_recursiva(passos_restantes - 1, direcao);
+}
+
+void movimentar_rainha() {
+    printf("\nMovimentacao da Rainha (5 casas para Direita):\n");
+    movimentar_rainha_recursiva(PASSOS_RAINHA, "Direita");
+
+    printf("\nMovimentacao da Rainha (5 casas na Diagonal Cima-Esquerda):\n");
+    movimentar_rainha_recursiva(PASSOS_RAINHA, "Diagonal Cima-Esquerda");
+}
+
+// ----------------- CAVALO ------------------
+
+void movimentar_cavalo() {
+    printf("\nMovimentacao do Cavalo (2 Cima, 1 Direita) usando loops aninhados:\n");
+
+    for (int i = 0; i < 2; i++) {
+        printf("  Passo vertical %d: Cima\n", i + 1);
+        for (int j = 0; j < 1; j++) {
+            if (i == 1 && j == 0) {
+                printf("    (preparando pra movimento em L)\n");
+                continue;
+            }
+        }
+    }
+
+    for (int k = 0; k < 1; k++) {
+        printf("  Passo horizontal: Direita\n");
+        if (k == 0) {
+            // só demonstrando controle de fluxo
+            break;
+        }
+    }
 }
